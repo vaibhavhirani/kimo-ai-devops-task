@@ -1,0 +1,7 @@
+FROM maven:3.3-jdk-8
+WORKDIR /usr/src/sf
+COPY /shopfront /usr/src/sf/
+RUN mvn clean install
+EXPOSE 8010
+CMD ["java","-Djava.security.egd=file:/dev/./urandom","-jar","./target/shopfront-0.0.1-SNAPSHOT.jar","server"]
+
