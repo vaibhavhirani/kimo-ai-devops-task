@@ -1,0 +1,147 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: productcatalogue
+  labels:
+    app: productcatalogue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: productcatalogue
+  template:
+    metadata:
+      labels:
+        app: productcatalogue 
+    spec:
+      containers:
+        - name: productcatalogue
+          image: 'productcatalogue:0.0.1'
+          ports:
+            - containerPort: 8020 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: productcatalogue
+spec:
+  type: NodePort
+  selector:
+      app: productcatalogue
+  ports:
+    - protocol: TCP
+      port: 8020
+      targetPort: 8020
+
+   
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shopfront
+  labels:
+    app: shopfront
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shopfront
+  template:
+    metadata:
+      labels:
+        app: shopfront 
+    spec:
+      containers:
+        - name: shopfront
+          image: 'shopfront:0.0.1'
+          ports:
+            - containerPort: 8010
+            # hostPort: 8020
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shopfront
+spec:
+  type: NodePort
+  selector:
+      app: shopfront
+  ports:
+    - protocol: TCP
+      port: 8010
+      targetPort: 8010
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stockmanager
+  labels:
+    app: stockmanager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stockmanager
+  template:
+    metadata:
+      labels:
+        app: stockmanager 
+    spec:
+      containers:
+        - name: stockmanager
+          image: 'stockmanager:0.0.1'
+          ports:
+            - containerPort: 8030
+            # hostPort: 8020
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stockmanager
+spec:
+  type: NodePort
+  selector:
+      app: stockmanager
+  ports:
+    - protocol: TCP
+      port: 8030
+      targetPort: 8030
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: shopfront-deployment
+#   labels:
+#     app: shopfront
+# spec:
+
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: stockmanager-deployment
+#   labels:
+#     app: stockmanager
+# spec:
