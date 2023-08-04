@@ -109,6 +109,33 @@ spec:
       port: 8030
       targetPort: 8030
 
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kimo-ingress
+  # nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  # ingressClassName: nginx-example
+  rules:
+  - host: "vaibhav.k8s. io"
+    http:
+      paths:
+      - path: /products
+        pathType: Prefix
+        backend:
+          service:
+            name: productcatalogue
+            port:
+              number: 8020
+      - path: /stocks
+        pathType: Prefix
+        backend:
+          service:
+            name: stockmanager
+            port:
+              number: 8030
+      
 
 
 
@@ -123,25 +150,3 @@ spec:
 
 
 
-
-
-
-
-
-# ---
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: shopfront-deployment
-#   labels:
-#     app: shopfront
-# spec:
-
-# ---
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: stockmanager-deployment
-#   labels:
-#     app: stockmanager
-# spec:
